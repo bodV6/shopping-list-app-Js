@@ -3,26 +3,33 @@
 const newItemInput = document.getElementById("item-input");
 const form = document.querySelector("#item-form");
 
+const createElementAndCLass = (el, classname) => {
+  const element = document.createElement(el);
+  element.className = classname && classname;
 
-const createElement = (el) => {
-     document.createElement(`${el}`);
+  return element;
 };
-
-
-
 
 const addItemToUi = (e) => {
   e.preventDefault();
-  // let itemInput;
-  let itemInput = newItemInput.value;
-  const li = document.createElement("li"); //NOT DRY
-  const liText = document.createTextNode(itemInput);
-  const button = document.createElement('button');
-  const iTag = document.createElement("i");
+  let itemInput;
+  if (newItemInput.value === "") {
+    alert("Please enter an item");
+  }
 
-  iTag.className= "fa-solid fa-xmark";
-  button.className ="remove-item btn-link text-red";
-  button.appendChild(iTag);
+  itemInput =
+    newItemInput.value.trim().at(0).toUpperCase() +
+    newItemInput.value.trim().slice(1);
+
+  const li = createElementAndCLass("li");
+  const liText = document.createTextNode(itemInput);
+  const button = createElementAndCLass(
+    "button",
+    "remove-item btn-link text-red"
+  );
+  const icon = createElementAndCLass("i", "fa-solid fa-xmark");
+
+  button.appendChild(icon);
   li.appendChild(liText);
   li.appendChild(button);
   document.getElementById("item-list").appendChild(li);
@@ -31,6 +38,3 @@ const addItemToUi = (e) => {
 };
 
 form.addEventListener("submit", addItemToUi);
-
-
-
